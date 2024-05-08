@@ -1,0 +1,589 @@
+openapi: 3.1.0
+info:
+  title: KiddoAPI
+  version: 0.1.0
+paths:
+  /api/users/login:
+    post:
+      tags:
+        - API
+        - Users
+      summary: Login
+      operationId: login_api_users_login_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessToken'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/users/:
+    post:
+      tags:
+        - API
+        - Users
+      summary: Register
+      operationId: register_api_users__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegistration'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/achievements/:
+    get:
+      tags:
+        - API
+        - Achievements
+      summary: Get Achievements
+      operationId: get_achievements_api_achievements__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Achievement'
+                type: array
+                title: Response Get Achievements Api Achievements  Get
+  /api/activities/{child_id}:
+    post:
+      tags:
+        - API
+        - Activities
+      summary: Add Activity
+      operationId: add_activity_api_activities__child_id__post
+      parameters:
+        - name: child_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+            title: Child Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ActivityAnswer'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activity'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    get:
+      tags:
+        - API
+        - Activities
+      summary: Get Activities
+      operationId: get_activities_api_activities__child_id__get
+      parameters:
+        - name: child_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+            title: Child Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Activity'
+                title: Response Get Activities Api Activities  Child Id  Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/activities/{child_id}/report:
+    get:
+      tags:
+        - API
+        - Activities
+      summary: Get Activity Report
+      operationId: get_activity_report_api_activities__child_id__report_get
+      parameters:
+        - name: child_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+            title: Child Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActivityReport'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/children/:
+    get:
+      tags:
+        - API
+        - Children
+      summary: Get Children
+      operationId: get_children_api_children__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Child'
+                type: array
+                title: Response Get Children Api Children  Get
+    post:
+      tags:
+        - API
+        - Children
+      summary: Create Child
+      operationId: create_child_api_children__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChildRegistration'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Child'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/children/{child_id}:
+    get:
+      tags:
+        - API
+        - Children
+      summary: Get Child
+      operationId: get_child_api_children__child_id__get
+      parameters:
+        - name: child_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+            title: Child Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Child'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/games/:
+    get:
+      tags:
+        - API
+        - Games
+      summary: Get Games
+      operationId: get_games_api_games__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Game'
+                type: array
+                title: Response Get Games Api Games  Get
+  /api/games/{game_id}:
+    get:
+      tags:
+        - API
+        - Games
+      summary: Get Game
+      operationId: get_game_api_games__game_id__get
+      parameters:
+        - name: game_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+            title: Game Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /resources/{resource_name}:
+    get:
+      tags:
+        - Resources
+      summary: Get Resources
+      description: >-
+        Get a resource by name, e.g. /resources/child1.jpg or
+        /resources/child2.jpg
+      operationId: get_resources_resources__resource_name__get
+      parameters:
+        - name: resource_name
+          in: path
+          required: true
+          schema:
+            type: string
+            title: Resource Name
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    AccessToken:
+      properties:
+        access_token:
+          type: string
+          title: Access Token
+        token_type:
+          type: string
+          title: Token Type
+      type: object
+      required:
+        - access_token
+        - token_type
+      title: AccessToken
+    Achievement:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+      type: object
+      required:
+        - id
+        - name
+        - description
+      title: Achievement
+    Activity:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        instructions:
+          items:
+            $ref: '#/components/schemas/Showable'
+          type: array
+          title: Instructions
+        elements:
+          items:
+            $ref: '#/components/schemas/Showable'
+          type: array
+          title: Elements
+        feedback:
+          items:
+            $ref: '#/components/schemas/Showable'
+          type: array
+          title: Feedback
+      type: object
+      required:
+        - id
+        - instructions
+        - elements
+        - feedback
+      title: Activity
+    ActivityAnswer:
+      properties:
+        selected_answer:
+          type: string
+          title: Selected Answer
+        answer:
+          type: string
+          title: Answer
+      type: object
+      required:
+        - selected_answer
+        - answer
+      title: ActivityAnswer
+    ActivityReport:
+      properties:
+        most_failed:
+          $ref: '#/components/schemas/Theme'
+        most_successful:
+          $ref: '#/components/schemas/Theme'
+        most_selected:
+          $ref: '#/components/schemas/Theme'
+        mean_time:
+          type: number
+          title: Mean Time
+      type: object
+      required:
+        - most_failed
+        - most_successful
+        - most_selected
+        - mean_time
+      title: ActivityReport
+    Child:
+      properties:
+        avatar:
+          type: string
+          title: Avatar
+        progress:
+          type: number
+          title: Progress
+        name:
+          type: string
+          title: Name
+        id:
+          type: string
+          format: uuid
+          title: Id
+        age:
+          type: integer
+          title: Age
+        achievements:
+          items:
+            $ref: '#/components/schemas/Achievement'
+          type: array
+          title: Achievements
+      type: object
+      required:
+        - avatar
+        - progress
+        - name
+        - id
+        - age
+        - achievements
+      title: Child
+    ChildRegistration:
+      properties:
+        name:
+          type: string
+          title: Name
+        image:
+          type: string
+          title: Image
+      type: object
+      required:
+        - name
+        - image
+      title: ChildRegistration
+    Game:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        name:
+          type: string
+          title: Name
+        activity:
+          $ref: '#/components/schemas/Activity'
+        theme:
+          $ref: '#/components/schemas/Theme'
+        max_time:
+          type: number
+          title: Max Time
+      type: object
+      required:
+        - id
+        - name
+        - activity
+        - theme
+        - max_time
+      title: Game
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    Login:
+      properties:
+        email:
+          type: string
+          title: Email
+        password:
+          type: string
+          title: Password
+      type: object
+      required:
+        - email
+        - password
+      title: Login
+    Showable:
+      properties:
+        image:
+          type: string
+          title: Image
+        sound:
+          type: string
+          title: Sound
+        text:
+          type: string
+          title: Text
+      type: object
+      required:
+        - image
+        - sound
+        - text
+      title: Showable
+    Theme:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        name:
+          type: string
+          title: Name
+        items:
+          items:
+            $ref: '#/components/schemas/Showable'
+          type: array
+          title: Items
+      type: object
+      required:
+        - id
+        - name
+        - items
+      title: Theme
+    User:
+      properties:
+        name:
+          type: string
+          title: Name
+        email:
+          type: string
+          title: Email
+        password:
+          type: string
+          title: Password
+        id:
+          type: string
+          format: uuid
+          title: Id
+      type: object
+      required:
+        - name
+        - email
+        - password
+        - id
+      title: User
+    UserRegistration:
+      properties:
+        name:
+          type: string
+          title: Name
+        email:
+          type: string
+          title: Email
+        password:
+          type: string
+          title: Password
+      type: object
+      required:
+        - name
+        - email
+        - password
+      title: UserRegistration
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+              - type: string
+              - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+        - loc
+        - msg
+        - type
+      title: ValidationError
